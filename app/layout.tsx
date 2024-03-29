@@ -33,7 +33,8 @@ export default function RootLayout({
         
         {children}
         </body>
-      <link rel="icon" href="\new\public\logo2.png" type="image/svg+xml" />
+        <link rel="icon" href="/logo2.svg" type="image/svg+xml" />
+
     </html>
     
     </ClerkProvider>
