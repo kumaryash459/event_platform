@@ -18,6 +18,7 @@ const Navitems = () => {
                 <Link href='link.route'>{link.label}</Link>
             </li>
         )
+        
       })} 
     </ul>
   )
