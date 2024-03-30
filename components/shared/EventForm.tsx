@@ -14,27 +14,29 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-  })
+import { eventFormSchema } from "@/lib/Validator"
+import { eventDefaultValues } from "@/constants"
+import Dropdown from "./Dropdown"
+import { Textarea } from "@/components/ui/textarea"
+import FileUploader from "./FileUploader"
+
 
 type EventFormProps={
     userId:String,
     type:"Create" | "Update"
 }
+
+const initialValues = eventDefaultValues;
+
 const EventForm = ({userId,type }: EventFormProps) => {
     // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
+  const form = useForm<z.infer<typeof eventFormSchema>>({
+    resolver: zodResolver(eventFormSchema),
+    defaultValues: initialValues
   })
  
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmit(values: z.infer<typeof eventFormSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     console.log(values)
@@ -43,23 +45,66 @@ const EventForm = ({userId,type }: EventFormProps) => {
     
     <div>
       <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 md:flex-row">
+
         <FormField
           control={form.control}
-          name="username"
+          name="title"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Username</FormLabel>
+            <FormItem className="w-full">
+              
               <FormControl>
-                <Input placeholder="Evently" {...field} />
-              </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+                <Input placeholder="Event title" {...field} className="rounded-2xl bg-gray-50"/>
+              </FormControl>    
               <FormMessage />
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="categoryId"
+          render={({ field }) => (
+            <FormItem className="w-full ">
+              
+              <FormControl>
+                <Dropdown onChangeHandler={field.onChange} value={field.value} />
+              </FormControl>    
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        </div>
+        <div className="flex flex-col gap-5 md:flex-row">
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              
+              <FormControl className="h-72">
+                <Textarea  placeholder="Description" {...field} className="rounded-2xl bg-gray-50" />
+
+              </FormControl>    
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="imageUrl"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              
+              <FormControl className="h-72">
+               <FileUploader/>
+
+              </FormControl>    
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        </div>
         <Button type="submit">Submit</Button>
       </form>
     </Form>
