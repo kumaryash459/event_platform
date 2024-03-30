@@ -15,12 +15,12 @@ const Navitems = () => {
             className={`${
               isActive && 'text-blue-800 '
             } flex-center p-medium-16 whitespace-nowrap`}>
-                <Link href='link.route'>{link.label}</Link>
+                <Link href={link.route}>{link.label}</Link>
             </li>
         )
         
       })} 
-    </ul>
+    </ul> 
   )
 }
 

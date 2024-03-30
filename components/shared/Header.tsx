@@ -7,6 +7,7 @@ import { Button } from '../ui/button'
 import Navitems from './Navitems'
 import MobileNav from './MobileNav'
 
+
 const Header = () => {
   return (
     <header className=' w-full py-3  border-b'>
