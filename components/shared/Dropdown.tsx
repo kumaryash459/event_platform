@@ -46,12 +46,12 @@ const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
                 </SelectItem>
             ))}
             <AlertDialog>
-  <AlertDialogTrigger className='p-medium-14 flex w-full rounded-sm py-3 pl-8 text-blue-500 hover:bg-gray-100 focus:text-blue-500'>Open</AlertDialogTrigger>
-  <AlertDialogContent>
+  <AlertDialogTrigger className='p-medium-14 flex w-full rounded-sm py-3 pl-8 text-primary-500 hover:bg-primary-50 focus:text-primary-500'>Open</AlertDialogTrigger>
+  <AlertDialogContent >
     <AlertDialogHeader>
-      <AlertDialogTitle>New Category</AlertDialogTitle>
+      <AlertDialogTitle >New Category</AlertDialogTitle>
       <AlertDialogDescription>
-        <Input type='text' placeholder='category name' onChange={(e)=>setCategory(e.target.value)} className="rounded-2xl"/>
+        <Input type='text' placeholder='category name' onChange={(e)=>setCategory(e.target.value)} className="input-field mt-3"/>
       </AlertDialogDescription>
     </AlertDialogHeader>
     <AlertDialogFooter>

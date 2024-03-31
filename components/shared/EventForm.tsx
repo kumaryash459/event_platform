@@ -18,17 +18,19 @@ import { eventFormSchema } from "@/lib/Validator"
 import { eventDefaultValues } from "@/constants"
 import Dropdown from "./Dropdown"
 import { Textarea } from "@/components/ui/textarea"
-import FileUploader from "./FileUploader"
+import {FileUploader} from "./FileUploader"
+import { useState } from "react"
+import Image from "next/image"
 
 
 type EventFormProps={
     userId:String,
     type:"Create" | "Update"
 }
-
 const initialValues = eventDefaultValues;
 
 const EventForm = ({userId,type }: EventFormProps) => {
+  const [files, setFiles] = useState<File[]>([])
     // 1. Define your form.
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -55,7 +57,7 @@ const EventForm = ({userId,type }: EventFormProps) => {
             <FormItem className="w-full">
               
               <FormControl>
-                <Input placeholder="Event title" {...field} className="rounded-2xl bg-gray-50"/>
+                <Input placeholder="Event title" {...field} className="input-field"/>
               </FormControl>    
               <FormMessage />
             </FormItem>
@@ -83,7 +85,7 @@ const EventForm = ({userId,type }: EventFormProps) => {
             <FormItem className="w-full">
               
               <FormControl className="h-72">
-                <Textarea  placeholder="Description" {...field} className="rounded-2xl bg-gray-50" />
+                <Textarea  placeholder="Description" {...field} className="rounded-2xl bg-grey-50 " />
 
               </FormControl>    
               <FormMessage />
@@ -97,7 +99,7 @@ const EventForm = ({userId,type }: EventFormProps) => {
             <FormItem className="w-full">
               
               <FormControl className="h-72">
-               <FileUploader/>
+               <FileUploader onFieldChange={field.onChange} imageUrl={field.value} setFiles={setFiles} />
 
               </FormControl>    
               <FormMessage />
@@ -105,6 +107,31 @@ const EventForm = ({userId,type }: EventFormProps) => {
           )}
         />
         </div>
+        
+          <div className="flex flex-col gap-5 md:flex-row">
+          <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              
+              <FormControl>
+                <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                <Image
+                        src="/assets/icons/location-grey.svg"
+                        alt="calendar"
+                        width={24}
+                        height={24}
+                      />
+                <Input placeholder="location" {...field} className="input-field"/>
+                </div>
+              </FormControl>    
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+          </div>
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>
