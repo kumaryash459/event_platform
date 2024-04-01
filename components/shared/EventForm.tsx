@@ -21,6 +21,9 @@ import { Textarea } from "@/components/ui/textarea"
 import {FileUploader} from "./FileUploader"
 import { useState } from "react"
 import Image from "next/image"
+// import React, { useState } from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 
 type EventFormProps={
@@ -31,6 +34,7 @@ const initialValues = eventDefaultValues;
 
 const EventForm = ({userId,type }: EventFormProps) => {
   const [files, setFiles] = useState<File[]>([])
+
     // 1. Define your form.
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
@@ -124,6 +128,37 @@ const EventForm = ({userId,type }: EventFormProps) => {
                         height={24}
                       />
                 <Input placeholder="location" {...field} className="input-field"/>
+                </div>
+              </FormControl>    
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+          </div>
+          {/* Date picker */}
+          <div className="flex flex-col gap-5 md:flex-row">
+          <FormField
+          control={form.control}
+          name="startDateTime"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              
+              <FormControl>
+                <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                <Image
+                        src="/assets/icons/calendar.svg"
+                        alt="calendar"
+                        width={24}
+                        height={24}
+                      />
+                      <p className="ml-3 whitespace-nowrap text-gray-600 ">start Date:</p>
+                      <DatePicker selected={field.value} onChange={(date:Date) => field.onChange(date)} 
+                      showTimeSelect
+                      timeInputLabel="Time:"
+                      dateFormat='dd/MM/yyyy h:mm aa'
+                      wrapperClassName="datePicker"
+                      />
+
                 </div>
               </FormControl>    
               <FormMessage />
